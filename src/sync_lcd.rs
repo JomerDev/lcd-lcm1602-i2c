@@ -241,6 +241,17 @@ where
     pub fn scroll_cursor_right(&mut self) -> Result<(), I::Error> {
         self.command(Commands::ShiftCursorRight as u8)
     }
+
+    /// Creates a new char in the specified memory location. If a char already exists there it will be overwritten
+    pub fn create_char(&mut self, location: u8, charmap: &[u8]) -> Result<(), I::Error> {
+        let location = location & 0x7;
+        self.command(Mode::CGRAMAddr as u8 | location << 3)?;
+
+        for i in 0..8 {
+            self.send(charmap[i], Mode::Data)?;
+        }
+        Ok(())
+    }
 }
 
 impl<'a, const ROWS: u8, const COLUMNS: u8, I, D> uWrite for Lcd<'a, ROWS, COLUMNS, I, D>

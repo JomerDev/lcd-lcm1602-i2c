@@ -58,6 +58,7 @@ enum Mode {
     EntrySet = 0x04,
     DisplayControl = 0x08,
     FunctionSet = 0x20,
+    CGRAMAddr = 0x40,
     DDRAMAddr = 0x80,
 }
 
